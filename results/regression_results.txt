@@ -1,0 +1,240 @@
+── VIF check ──
+  max_toxicity_x100                   VIF = 1.01
+  mean_sentiment                      VIF = 1.25
+  mean_anger                          VIF = 1.20
+  mean_politeness                     VIF = 1.10
+
+======================================================================
+MODEL: RQ5 — PR merge outcome  (N=12098)
+merged ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z         P>|z|    [0.025    0.975]
+Intercept                            -0.165378  0.093272  -1.773073  7.621653e-02 -0.348188  0.017432
+C(repo)[T.scikit-learn/scikit-learn]  0.533515  0.089887   5.935382  2.931618e-09  0.357339  0.709691
+C(repo)[T.vercel/next.js]            -0.100730  0.066096  -1.523989  1.275115e-01 -0.230276  0.028816
+max_toxicity_x100                     0.031034  0.013900   2.232617  2.557424e-02  0.003790  0.058279
+mean_sentiment                        2.103988  0.121533  17.312041  3.816440e-67  1.865788  2.342189
+mean_anger                            4.397804  0.472383   9.309824  1.280448e-20  3.471950  5.323658
+mean_politeness                      -1.424416  0.202006  -7.051337  1.772064e-12 -1.820341 -1.028490
+log_num_comments_received             0.672355  0.053114  12.658762  1.000654e-36  0.568254  0.776456
+num_participants                     -0.146302  0.023648  -6.186661  6.145180e-10 -0.192652 -0.099953
+log_prior_pr_count                    0.295739  0.019324  15.304448  7.140475e-53  0.257865  0.333613
+log_first_response_delay_hours       -0.099678  0.014104  -7.067457  1.577982e-12 -0.127321 -0.072035
+is_newcomer                          -0.217885  0.078293  -2.782944  5.386812e-03 -0.371337 -0.064434
+Pseudo-R² (McFadden): 0.1183
+
+======================================================================
+MODEL: RQ1 — Contributor retention (30 days)  (N=12098)
+returned_30 ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.881434  0.116941  -7.537444   4.792722e-14 -1.110633 -0.652234
+C(repo)[T.scikit-learn/scikit-learn] -0.156848  0.100489  -1.560846   1.185600e-01 -0.353803  0.040107
+C(repo)[T.vercel/next.js]            -0.368730  0.085801  -4.297503   1.727328e-05 -0.536897 -0.200563
+max_toxicity_x100                     0.011106  0.015302   0.725781   4.679731e-01 -0.018886  0.041098
+mean_sentiment                       -0.016790  0.140441  -0.119553   9.048373e-01 -0.292049  0.258469
+mean_anger                            5.537561  0.830519   6.667592   2.600352e-11  3.909774  7.165348
+mean_politeness                      -0.362337  0.263284  -1.376223   1.687527e-01 -0.878365  0.153690
+log_num_comments_received             0.056542  0.059862   0.944544   3.448915e-01 -0.060785  0.173870
+num_participants                     -0.055423  0.028056  -1.975444   4.821775e-02 -0.110412 -0.000434
+log_prior_pr_count                    1.142933  0.033436  34.183199  4.296729e-256  1.077400  1.208465
+log_first_response_delay_hours       -0.032665  0.017435  -1.873590   6.098689e-02 -0.066836  0.001506
+is_newcomer                          -0.190399  0.091390  -2.083359   3.721847e-02 -0.369521 -0.011277
+Pseudo-R² (McFadden): 0.4480
+
+======================================================================
+MODEL: RQ1 — Contributor retention (90 days)  (N=12098)
+returned_90 ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.963956  0.137182  -7.026829   2.112803e-12 -1.232829 -0.695084
+C(repo)[T.scikit-learn/scikit-learn] -0.269785  0.106585  -2.531184   1.136783e-02 -0.478687 -0.060883
+C(repo)[T.vercel/next.js]            -0.683432  0.091911  -7.435778   1.039543e-13 -0.863575 -0.503289
+max_toxicity_x100                     0.034214  0.029743   1.150308   2.500172e-01 -0.024082  0.092510
+mean_sentiment                        0.019851  0.149810   0.132511   8.945802e-01 -0.273771  0.313474
+mean_anger                            5.536012  0.856751   6.461633   1.035789e-10  3.856811  7.215214
+mean_politeness                      -0.384787  0.277252  -1.387861   1.651794e-01 -0.928192  0.158617
+log_num_comments_received             0.184358  0.068905   2.675523   7.461283e-03  0.049306  0.319410
+num_participants                     -0.044392  0.033189  -1.337553   1.810423e-01 -0.109440  0.020657
+log_prior_pr_count                    1.510778  0.052863  28.578889  1.229478e-179  1.407168  1.614389
+log_first_response_delay_hours       -0.030961  0.018371  -1.685284   9.193383e-02 -0.066968  0.005046
+is_newcomer                           0.146788  0.101625   1.444408   1.486243e-01 -0.052393  0.345970
+Pseudo-R² (McFadden): 0.4980
+
+======================================================================
+MODEL: RQ1 — Contributor retention (180 days)  (N=12098)
+returned_180 ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.855818  0.149005  -5.743557   9.270804e-09 -1.147862 -0.563774
+C(repo)[T.scikit-learn/scikit-learn] -0.430695  0.110085  -3.912373   9.139370e-05 -0.646458 -0.214932
+C(repo)[T.vercel/next.js]            -0.871475  0.094998  -9.173591   4.575177e-20 -1.057668 -0.685282
+max_toxicity_x100                     0.025332  0.031198   0.811991   4.167966e-01 -0.035814  0.086479
+mean_sentiment                        0.133875  0.154081   0.868862   3.849227e-01 -0.168118  0.435868
+mean_anger                            5.805761  0.925331   6.274256   3.513096e-10  3.992147  7.619376
+mean_politeness                      -0.453349  0.282055  -1.607306   1.079872e-01 -1.006167  0.099469
+log_num_comments_received             0.226505  0.070193   3.226902   1.251381e-03  0.088930  0.364080
+num_participants                     -0.016010  0.032566  -0.491624   6.229849e-01 -0.079839  0.047819
+log_prior_pr_count                    1.671098  0.067918  24.604538  1.129537e-133  1.537980  1.804215
+log_first_response_delay_hours       -0.031051  0.018985  -1.635512   1.019418e-01 -0.068261  0.006160
+is_newcomer                           0.211293  0.112036   1.885942   5.930283e-02 -0.008293  0.430880
+Pseudo-R² (McFadden): 0.5123
+
+======================================================================
+MODEL: RQ1 — Retention 90d (for plot)  (N=12098)
+returned_90 ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.963956  0.137182  -7.026829   2.112803e-12 -1.232829 -0.695084
+C(repo)[T.scikit-learn/scikit-learn] -0.269785  0.106585  -2.531184   1.136783e-02 -0.478687 -0.060883
+C(repo)[T.vercel/next.js]            -0.683432  0.091911  -7.435778   1.039543e-13 -0.863575 -0.503289
+max_toxicity_x100                     0.034214  0.029743   1.150308   2.500172e-01 -0.024082  0.092510
+mean_sentiment                        0.019851  0.149810   0.132511   8.945802e-01 -0.273771  0.313474
+mean_anger                            5.536012  0.856751   6.461633   1.035789e-10  3.856811  7.215214
+mean_politeness                      -0.384787  0.277252  -1.387861   1.651794e-01 -0.928192  0.158617
+log_num_comments_received             0.184358  0.068905   2.675523   7.461283e-03  0.049306  0.319410
+num_participants                     -0.044392  0.033189  -1.337553   1.810423e-01 -0.109440  0.020657
+log_prior_pr_count                    1.510778  0.052863  28.578889  1.229478e-179  1.407168  1.614389
+log_first_response_delay_hours       -0.030961  0.018371  -1.685284   9.193383e-02 -0.066968  0.005046
+is_newcomer                           0.146788  0.101625   1.444408   1.486243e-01 -0.052393  0.345970
+Pseudo-R² (McFadden): 0.4980
+
+======================================================================
+MODEL: RQ3 — Maintainer politeness moderation  (N=12098)
+returned_90 ~ max_toxicity_x100 * mean_politeness + mean_sentiment + mean_anger + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.953494  0.136810  -6.969472   3.181317e-12 -1.221637 -0.685351
+C(repo)[T.scikit-learn/scikit-learn] -0.271014  0.106834  -2.536786   1.118753e-02 -0.480404 -0.061624
+C(repo)[T.vercel/next.js]            -0.682618  0.091807  -7.435322   1.043133e-13 -0.862557 -0.502679
+max_toxicity_x100                    -0.008639  0.022398  -0.385700   6.997187e-01 -0.052537  0.035260
+mean_politeness                      -0.475541  0.280343  -1.696287   8.983163e-02 -1.025003  0.073920
+max_toxicity_x100:mean_politeness     0.809891  0.272383   2.973354   2.945648e-03  0.276030  1.343751
+mean_sentiment                        0.020379  0.149806   0.136036   8.917926e-01 -0.273235  0.313993
+mean_anger                            5.596592  0.859271   6.513184   7.357426e-11  3.912452  7.280733
+log_num_comments_received             0.176612  0.068717   2.570131   1.016601e-02  0.041929  0.311295
+num_participants                     -0.043746  0.033171  -1.318799   1.872364e-01 -0.108760  0.021268
+log_prior_pr_count                    1.511111  0.052863  28.585192  1.026569e-179  1.407500  1.614721
+log_first_response_delay_hours       -0.029985  0.018366  -1.632645   1.025438e-01 -0.065982  0.006012
+is_newcomer                           0.146602  0.101662   1.442052   1.492876e-01 -0.052652  0.345856
+Pseudo-R² (McFadden): 0.4984
+
+======================================================================
+MODEL: RQ4 — Newcomer sensitivity (interaction)  (N=12098)
+returned_90 ~ max_toxicity_x100 * is_newcomer + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.959175  0.136933  -7.004683   2.475452e-12 -1.227559 -0.690790
+C(repo)[T.scikit-learn/scikit-learn] -0.268011  0.106706  -2.511678   1.201587e-02 -0.477151 -0.058871
+C(repo)[T.vercel/next.js]            -0.682531  0.091991  -7.419555   1.175148e-13 -0.862830 -0.502233
+max_toxicity_x100                     0.027082  0.028413   0.953150   3.405140e-01 -0.028606  0.082769
+is_newcomer                           0.137161  0.102968   1.332077   1.828349e-01 -0.064652  0.338975
+max_toxicity_x100:is_newcomer         0.028659  0.050002   0.573152   5.665419e-01 -0.069344  0.126661
+mean_sentiment                        0.021165  0.149980   0.141121   8.877743e-01 -0.272791  0.315122
+mean_anger                            5.518517  0.857459   6.435897   1.227461e-10  3.837928  7.199105
+mean_politeness                      -0.385247  0.277551  -1.388022   1.651305e-01 -0.929238  0.158743
+log_num_comments_received             0.183855  0.068710   2.675798   7.455164e-03  0.049185  0.318524
+num_participants                     -0.044783  0.033124  -1.352007   1.763729e-01 -0.109705  0.020138
+log_prior_pr_count                    1.510326  0.052845  28.580402  1.177406e-179  1.406752  1.613900
+log_first_response_delay_hours       -0.030981  0.018388  -1.684814   9.202444e-02 -0.067021  0.005060
+Pseudo-R² (McFadden): 0.4981
+
+======================================================================
+MODEL: RQ5 — PR merge outcome (binary toxicity >= 0.05)  (N=12098)
+merged ~ any_toxic_comment_005 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z         P>|z|    [0.025    0.975]
+Intercept                            -0.164281  0.093288  -1.761000  7.823836e-02 -0.347122  0.018561
+C(repo)[T.scikit-learn/scikit-learn]  0.533869  0.089853   5.941585  2.822792e-09  0.357760  0.709977
+C(repo)[T.vercel/next.js]            -0.099264  0.066106  -1.501600  1.332004e-01 -0.228829  0.030300
+any_toxic_comment_005                 0.529629  0.284573   1.861138  6.272467e-02 -0.028123  1.087381
+mean_sentiment                        2.101423  0.121474  17.299381  4.754737e-67  1.863339  2.339508
+mean_anger                            4.396733  0.472464   9.305965  1.327816e-20  3.470721  5.322745
+mean_politeness                      -1.425626  0.201991  -7.057886  1.690547e-12 -1.821520 -1.029732
+log_num_comments_received             0.675917  0.052841  12.791433  1.830671e-37  0.572350  0.779484
+num_participants                     -0.146814  0.023683  -6.199262  5.672857e-10 -0.193231 -0.100397
+log_prior_pr_count                    0.295526  0.019323  15.293917  8.394543e-53  0.257654  0.333399
+log_first_response_delay_hours       -0.099627  0.014108  -7.061836  1.643167e-12 -0.127278 -0.071976
+is_newcomer                          -0.219843  0.078290  -2.808069  4.983959e-03 -0.373289 -0.066398
+Pseudo-R² (McFadden): 0.1182
+
+======================================================================
+MODEL: RQ1 — Retention 90d (binary toxicity >= 0.05)  (N=12098)
+returned_90 ~ any_toxic_comment_005 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.943029  0.136945  -6.886208   5.729906e-12 -1.211436 -0.674623
+C(repo)[T.scikit-learn/scikit-learn] -0.263095  0.106707  -2.465590   1.367877e-02 -0.472237 -0.053954
+C(repo)[T.vercel/next.js]            -0.685191  0.092024  -7.445806   9.635402e-14 -0.865554 -0.504828
+any_toxic_comment_005                 1.376623  0.397166   3.466111   5.280461e-04  0.598191  2.155055
+mean_sentiment                        0.028847  0.149923   0.192414   8.474176e-01 -0.264996  0.322691
+mean_anger                            5.538357  0.860428   6.436750   1.220589e-10  3.851950  7.224764
+mean_politeness                      -0.391861  0.277452  -1.412358   1.578447e-01 -0.935656  0.151934
+log_num_comments_received             0.173528  0.068970   2.516000   1.186951e-02  0.038350  0.308706
+num_participants                     -0.045460  0.033301  -1.365099   1.722219e-01 -0.110729  0.019810
+log_prior_pr_count                    1.511515  0.052901  28.572264  1.486068e-179  1.407830  1.615200
+log_first_response_delay_hours       -0.031616  0.018431  -1.715357   8.627985e-02 -0.067740  0.004508
+is_newcomer                           0.143353  0.101764   1.408682   1.589291e-01 -0.056100  0.342806
+Pseudo-R² (McFadden): 0.4989
+
+======================================================================
+MODEL: RQ5 — PR merge outcome (binary toxicity >= 0.10)  (N=12098)
+merged ~ any_toxic_comment_010 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z         P>|z|    [0.025    0.975]
+Intercept                            -0.171284  0.093140  -1.838994  6.591601e-02 -0.353835  0.011267
+C(repo)[T.scikit-learn/scikit-learn]  0.532709  0.089936   5.923192  3.157517e-09  0.356437  0.708981
+C(repo)[T.vercel/next.js]            -0.098717  0.066101  -1.493418  1.353279e-01 -0.228272  0.030839
+any_toxic_comment_010                 0.847507  0.427111   1.984280  4.722463e-02  0.010386  1.684629
+mean_sentiment                        2.102152  0.121540  17.296003  5.041781e-67  1.863938  2.340365
+mean_anger                            4.391972  0.472203   9.301024  1.390995e-20  3.466471  5.317473
+mean_politeness                      -1.425706  0.202001  -7.057908  1.690280e-12 -1.821621 -1.029791
+log_num_comments_received             0.680450  0.052730  12.904353  4.253746e-38  0.577100  0.783799
+num_participants                     -0.146566  0.023659  -6.195005  5.828326e-10 -0.192936 -0.100196
+log_prior_pr_count                    0.295923  0.019324  15.313881  6.176553e-53  0.258049  0.333797
+log_first_response_delay_hours       -0.099654  0.014106  -7.064749  1.609068e-12 -0.127301 -0.072007
+is_newcomer                          -0.218185  0.078312  -2.786113  5.334427e-03 -0.371672 -0.064697
+Pseudo-R² (McFadden): 0.1182
+
+======================================================================
+MODEL: RQ1 — Retention 90d (binary toxicity >= 0.10)  (N=12098)
+returned_90 ~ any_toxic_comment_010 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + is_newcomer + C(repo)
+----------------------------------------------------------------------
+                                         Coef.  Std.Err.          z          P>|z|    [0.025    0.975]
+Intercept                            -0.972814  0.136445  -7.129728   1.005677e-12 -1.240240 -0.705387
+C(repo)[T.scikit-learn/scikit-learn] -0.270293  0.106569  -2.536308   1.120283e-02 -0.479165 -0.061421
+C(repo)[T.vercel/next.js]            -0.679958  0.091801  -7.406827   1.293571e-13 -0.859885 -0.500030
+any_toxic_comment_010                 0.771137  0.533373   1.445773   1.482408e-01 -0.274255  1.816529
+mean_sentiment                        0.018803  0.149780   0.125540   9.000960e-01 -0.274760  0.312367
+mean_anger                            5.528441  0.856893   6.451732   1.105793e-10  3.848963  7.207920
+mean_politeness                      -0.386285  0.277319  -1.392927   1.636417e-01 -0.929820  0.157250
+log_num_comments_received             0.196712  0.068037   2.891250   3.837122e-03  0.063362  0.330062
+num_participants                     -0.045299  0.033248  -1.362447   1.730569e-01 -0.110463  0.019866
+log_prior_pr_count                    1.510028  0.052826  28.585045  1.030892e-179  1.406491  1.613564
+log_first_response_delay_hours       -0.030790  0.018371  -1.675993   9.373958e-02 -0.066798  0.005217
+is_newcomer                           0.144481  0.101597   1.422105   1.549957e-01 -0.054645  0.343607
+Pseudo-R² (McFadden): 0.4979
+
+======================================================================
+ROBUSTNESS CHECKS — AUTHOR FIXED EFFECTS
+======================================================================
+Authors with >=2 PRs: 730
+Observations in FE sample: 10618
+
+======================================================================
+MODEL: RQ5 — PR merge outcome (author fixed effects)
+merged ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + C(repo) + C(author)
+----------------------------------------------------------------------
+Model failed: Singular matrix
+
+======================================================================
+MODEL: RQ1 — Retention 90d (author fixed effects)
+returned_90 ~ max_toxicity_x100 + mean_sentiment + mean_anger + mean_politeness + log_num_comments_received + num_participants + log_prior_pr_count + log_first_response_delay_hours + C(repo) + C(author)
+----------------------------------------------------------------------
+Model failed: Singular matrix
+
+======================================================================
+RQ2: TEMPORAL EMOTIONAL CHANGE BEFORE DEPARTURE
+======================================================================
+Not enough multi-PR leavers for temporal analysis.
+

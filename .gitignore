@@ -1,0 +1,13 @@
+# Large raw/processed data files — too large for GitHub
+data/raw/pr_comments.csv
+data/processed/comments_scored.csv
+data/processed/text_score_map.csv
+
+# LaTeX compile artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk

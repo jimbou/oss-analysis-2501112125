@@ -1,0 +1,392 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% ── Theme & Colors ──────────────────────────────────────────────
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\definecolor{darkblue}{RGB}{0,51,102}
+\definecolor{accentblue}{RGB}{51,122,183}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{alertred}{RGB}{192,57,43}
+\definecolor{successgreen}{RGB}{39,174,96}
+
+\setbeamercolor{palette primary}{bg=darkblue, fg=white}
+\setbeamercolor{palette secondary}{bg=accentblue, fg=white}
+\setbeamercolor{frametitle}{bg=darkblue, fg=white}
+\setbeamercolor{title}{bg=darkblue, fg=white}
+\setbeamercolor{block title}{bg=accentblue, fg=white}
+\setbeamercolor{block body}{bg=lightgray, fg=black}
+\setbeamercolor{block title alerted}{bg=alertred, fg=white}
+\setbeamercolor{block body alerted}{bg=lightgray, fg=black}
+\setbeamercolor{block title example}{bg=successgreen, fg=white}
+\setbeamercolor{block body example}{bg=lightgray, fg=black}
+\setbeamercolor{item}{fg=accentblue}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,center]{palette primary}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.5ex,dp=1ex,center]{palette secondary}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,right]{palette primary}%
+      \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}}%
+}
+
+% ── Packages ────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usepackage{mathtools}
+
+% ── Meta ────────────────────────────────────────────────────────
+\title[PR Communication Tone]{Communication Tone, Pull Request Outcomes,\\and Contributor Return in Open Source
+\newline
+Part 3: Final Results}
+\author[D.S Bouras]{Dimitrios Stamatios Bouras \\ \small 2501112125}
+\institute{Quantitative Analysis of Open Source Software}
+\date{Spring 2026}
+
+% ════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title ───────────────────────────────────────────────────────
+\begin{frame}
+\titlepage
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{The Question}
+\begin{block}{Core question (observational)}
+Do communication signals in pull request discussion associate with whether a PR gets merged and whether the author comes back?
+\end{block}
+
+\vspace{0.5em}
+\begin{description}
+  \item[RQ1] Which signals associate with \textbf{PR merge outcome}?
+  \item[RQ2] Which signals associate with \textbf{author return} at 30 / 90 / 180 days?
+  \item[RQ3] Are \textbf{newcomers} affected differently from experienced contributors?
+  \item[RQ4] Does \textbf{politeness} buffer the effect of isolated harsh language?
+\end{description}
+
+\vspace{0.5em}
+\begin{exampleblock}{Signals measured per PR}
+Toxicity (max), sentiment, anger --- transformer models \quad|\quad Politeness --- lexical heuristic
+\end{exampleblock}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{The Dataset}
+\begin{columns}[T]
+\begin{column}{0.50\textwidth}
+\begin{block}{Scale}
+\begin{itemize}
+  \item \textbf{12,098} focal PRs (Jan 2024 -- Mar 2025)
+  \item \textbf{3} repositories: Kubernetes, Next.js, scikit-learn
+  \item \textbf{2,210} PR authors; \textbf{100k+} scored comments
+\end{itemize}
+\end{block}
+
+\begin{exampleblock}{Key rates (mean $\pm$ SD)}
+\begin{itemize}
+  \item Merge: \textbf{75.7\%} \quad Return 30d: \textbf{76.8\%}
+  \item Return 90d: \textbf{81.3\%} \quad 180d: \textbf{83.5\%}
+  \item Prior PR count: mean 65.7, SD 96.1
+\end{itemize}
+\end{exampleblock}
+\end{column}
+
+\begin{column}{0.46\textwidth}
+\begin{alertblock}{Key descriptive fact}
+Only \textbf{1.0\%} of PRs have any comment with toxicity $\geq 0.05$. These are well-moderated projects.
+\end{alertblock}
+
+\vspace{0.4em}
+\begin{block}{Data leakage prevention}
+A \textbf{6-month lookback} (Jul--Dec 2023) precedes the focal window. This ensures contributor history is available before any focal PR is observed --- preventing leakage into newcomer classification.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{Methodology}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{Variable types and model choice}
+\begin{itemize}
+  \item Outcomes (\textit{merged}, \textit{returned}) are \textbf{binary} $\rightarrow$ logistic regression
+  \item NLP signals are \textbf{continuous} $\in [0,1]$ or $[-1,1]$
+  \item Controls: prior PR count, comment count, participants, response delay, repo fixed effects
+  \item HC3 robust standard errors; VIF 1.01--1.25 (no multicollinearity)
+\end{itemize}
+\end{block}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\begin{block}{Key cleaning decisions}
+\begin{itemize}
+  \item Bots filtered by login pattern
+  \item Comments $<$ minimum length discarded
+  \item Code blocks and URLs stripped before NLP scoring
+  \item Only \textbf{received} comments scored (excludes PR author's own text)
+  \item Duplicate comment texts deduplicated before model inference
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{What the Signals Look Like}
+\begin{center}
+\includegraphics[width=0.82\textwidth]{02_sentiment_distribution.png}
+\end{center}
+
+\begin{itemize}
+  \item \textbf{Sentiment} is well-distributed across PRs --- a usable continuous signal
+  \item \textbf{Max toxicity} is extremely right-skewed: almost all PRs sit near zero
+  \item This is why averaging toxicity fails and why max toxicity and binary flags are needed
+\end{itemize}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{RQ1: What Predicts Merge?}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\includegraphics[width=\linewidth]{06a_coef_merge.png}
+
+\vspace{0.2em}
+\small $N = 12{,}098$,\; McFadden pseudo-$R^2 = 0.118$
+\end{column}
+
+\begin{column}{0.42\textwidth}
+\begin{block}{Significant signals}
+\begin{itemize}
+  \item \textbf{Sentiment} strongly positive\\{\small coef $= +2.10$, $p < 10^{-60}$}
+  \item \textbf{Anger} positive\\{\small coef $= +4.40$, $p < 10^{-20}$}
+  \item \textbf{Politeness} negative\\{\small coef $= -1.42$, $p < 10^{-12}$}
+\end{itemize}
+\end{block}
+
+\begin{exampleblock}{Note}
+Anger and politeness direction explained on next slide.
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{Why the Anger and Politeness Findings Make Sense}
+\begin{columns}[T]
+\begin{column}{0.44\textwidth}
+\includegraphics[width=\linewidth]{03_toxicity_vs_merged.png}
+
+\vspace{0.2em}
+\small Merged PRs carry the high-toxicity outliers --- raw data confirms the direction.
+\end{column}
+
+\begin{column}{0.53\textwidth}
+\begin{block}{Anger $\rightarrow$ more merging}
+``This is completely broken'' scores as \emph{anger} in a social-media model. In code review it signals \textbf{engaged review} pushing toward a decision.
+\end{block}
+
+\vspace{0.2em}
+\begin{block}{Politeness $\rightarrow$ fewer merges}
+``Maybe consider\ldots'', ``could you perhaps\ldots'' marks \textbf{soft rejection}, not approval.
+\end{block}
+
+\vspace{0.2em}
+\begin{alertblock}{Key lesson}
+NLP signals carry real information, but not what they were designed to capture. Domain context is essential.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{RQ2: What Predicts Return?}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\includegraphics[width=\linewidth]{06b_coef_retention90.png}
+
+\vspace{0.2em}
+\small $N = 12{,}098$,\; McFadden pseudo-$R^2 = 0.498$
+\end{column}
+
+\begin{column}{0.42\textwidth}
+\begin{block}{Significant signals}
+\begin{itemize}
+  \item \textbf{Prior PR count} dominates\\{\small coef $= +1.51$, $p < 10^{-179}$}
+  \item \textbf{Anger} still positive\\{\small coef $= +5.54$, $p < 10^{-10}$}
+  \item Toxicity, sentiment, politeness:\\{\small \textbf{not significant}}
+\end{itemize}
+\end{block}
+
+\begin{alertblock}{Main finding}
+Return is about \textbf{who you already are}, not the tone of one PR.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{RQ3: Newcomers vs.\ Experienced Contributors}
+\begin{center}
+\includegraphics[width=0.84\textwidth]{05_newcomer_vs_experienced.png}
+\end{center}
+
+\begin{itemize}
+  \item \textbf{Left}: toxicity exposure is similar for both groups --- newcomers are not treated more harshly
+  \item \textbf{Right}: experienced contributors return at $\sim$92\%; newcomers at $\sim$28\%
+  \item Newcomer $\times$ toxicity interaction: \textbf{not significant} ($p = 0.57$) --- the gap is about experience, not tone
+\end{itemize}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{RQ4: Politeness as a Buffer}
+\begin{block}{Does a polite discussion soften isolated harsh comments?}
+Interaction term: $\texttt{max\_toxicity} \times \texttt{mean\_politeness}$ in the 90-day return model.
+\end{block}
+
+\vspace{0.5em}
+\begin{itemize}
+  \item Interaction is \textbf{significant}: $p = 0.003$, coef $= +0.81$
+  \item When overall discussion is polite, isolated harsh comments associate \emph{less} negatively with return
+  \item The overall culture of the discussion absorbs individual sharp moments
+\end{itemize}
+
+\vspace{0.5em}
+\begin{alertblock}{Interpretation}
+Context matters: one sharp comment in an otherwise civil discussion lands differently than the same comment in a hostile thread. Community tone is a cushion.
+\end{alertblock}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{What We Learned}
+\begin{columns}[T]
+\begin{column}{0.56\textwidth}
+\begin{block}{From the results}
+\begin{itemize}
+  \item Communication tone matters more for \textbf{merge} than for \textbf{return}
+  \item Return is dominated by \textbf{contributor experience} --- one bad discussion does not override years of history
+  \item Overt toxicity is too rare in large moderated repos to drive retention outcomes on its own
+  \item The politeness buffer suggests that \textbf{overall community culture} absorbs individual harsh moments
+\end{itemize}
+\end{block}
+\end{column}
+
+\begin{column}{0.40\textwidth}
+\begin{alertblock}{From the method}
+NLP signals trained on social media do not map cleanly to code review. Technical assertiveness scores as anger; tentative rejection scores as politeness. Domain context is essential for interpretation.
+\end{alertblock}
+
+\vspace{0.5em}
+\begin{exampleblock}{Broader takeaway}
+The biggest risk to losing contributors is not any single PR discussion --- it is failing to onboard them deeply enough to begin with.
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{Limitations and Robustness}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{Design limitations}
+\begin{itemize}
+  \item Observational: associations only, not causes
+  \item Return = opening another PR, not all activity
+  \item Only 3 large English-language repositories
+  \item NLP models trained on social media, not code review
+  \item Author fixed effects failed (singular matrix)
+\end{itemize}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\textbf{Robustness checks}
+\begin{itemize}
+  \item Binary toxicity $\geq 0.05$: retention OR significant ($p < 0.001$)
+  \item Binary toxicity $\geq 0.10$: not significant ($p = 0.15$)
+  \item Results change with threshold --- toxicity is sparse and operationalization-sensitive
+\end{itemize}
+
+\vspace{0.4em}
+\begin{alertblock}{On toxicity}
+The data do \textbf{not} support a simple ``toxic comments drive people away'' story.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{Experience \& Reflections}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{What I learned}
+\begin{itemize}
+  \item Running a full empirical pipeline end-to-end: API collection, NLP scoring, regression analysis
+  \item Why data leakage matters --- the lookback window was a non-obvious design decision that changed the results
+  \item Off-the-shelf NLP models carry domain assumptions that can \textbf{invert} your expected findings
+\end{itemize}
+\end{block}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{What was hardest}
+\begin{itemize}
+  \item Toxicity is so rare (1\% of PRs) that standard analysis almost cannot find it
+  \item Operationalization choices --- mean vs.\ max, which threshold --- changed significance
+  \item Deciding what counts as a \emph{result} vs.\ an artifact of the model
+\end{itemize}
+\end{alertblock}
+
+\vspace{0.3em}
+\begin{exampleblock}{If I did it again}
+I would validate the NLP signals against domain-specific ground truth (e.g., manual annotation of code review tone) before trusting their direction.
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────────
+\begin{frame}{Summary}
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Question} & \textbf{Finding} & \textbf{Strength} \\
+\midrule
+RQ1: signals and merge     & sentiment $+$, anger $+$, politeness $-$ & strong \\
+RQ2: signals and return    & prior experience dominates               & very strong \\
+RQ3: newcomer sensitivity  & no differential toxicity effect          & null result \\
+RQ4: politeness moderation & buffers isolated harsh comments          & moderate \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.3em}
+\begin{columns}[c]
+\begin{column}{0.68\textwidth}
+\begin{exampleblock}{One-sentence conclusion}
+Communication tone shapes \textbf{whether your PR gets accepted}, but \textbf{who you already are} determines whether you come back.
+\end{exampleblock}
+\vspace{0.4em}
+\centering\Large\textbf{Questions?}
+\end{column}
+
+\begin{column}{0.26\textwidth}
+\centering
+\includegraphics[width=0.80\linewidth]{qr-code.png}\\[0.2em]
+\small\textit{Repository}
+\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}
