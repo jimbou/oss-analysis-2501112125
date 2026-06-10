@@ -11,3 +11,8 @@ data/processed/text_score_map.csv
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+DATA.md
+QA.md
+references.bib
+report.pdf
+report.tex

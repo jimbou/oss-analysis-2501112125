@@ -41,9 +41,9 @@ artifacts/
 │
 ├── scripts/                ← all five pipeline scripts + config
 ├── data/
-│   ├── raw/                ← pull_requests.csv, pr_comments.csv
-│   └── processed/          ← pr_dataset_structural.csv, pr_nlp_features.csv,
-│                              comments_scored.csv, text_score_map.csv
+│   ├── raw/                ← pull_requests.csv  [pr_comments.csv — see below]
+│   └── processed/          ← pr_dataset_structural.csv, pr_nlp_features.csv
+│                              [comments_scored.csv, text_score_map.csv — see below]
 ├── results/
 │   ├── descriptive_stats.txt
 │   ├── regression_results.txt
@@ -54,6 +54,22 @@ artifacts/
     ├── part2_midterm/      ← midterm presentation (slides + PDF + script)
     └── part3_final/        ← final presentation (slides + PDF + script)
 ```
+
+---
+
+## Large Data Files
+
+Three files exceed GitHub's 100 MB file size limit and are not included in this repository. They are archived on Figshare and can be downloaded from:
+
+> **[PLACEHOLDER — Figshare DOI link]**
+
+| File | Size | Description |
+|---|---|---|
+| `data/raw/pr_comments.csv` | ~253 MB | Raw comment text and metadata for all PRs in the collection window |
+| `data/processed/comments_scored.csv` | ~231 MB | Per-comment NLP scores (toxicity, sentiment, anger, politeness) |
+| `data/processed/text_score_map.csv` | ~77 MB | Deduplicated text-to-score cache used during NLP inference |
+
+To reproduce the analysis from scratch, download these three files from Figshare and place them in the paths shown above before running the pipeline. See `PIPELINE.md` for full setup instructions. The smaller processed files already in this repository (`pr_nlp_features.csv`, `pr_dataset_structural.csv`) are sufficient to re-run the regression analysis without re-scoring all comments.
 
 ---
 
