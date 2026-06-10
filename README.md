@@ -61,7 +61,7 @@ artifacts/
 
 Three files exceed GitHub's 100 MB file size limit and are not included in this repository. They are archived on Figshare and can be downloaded from:
 
-> **[PLACEHOLDER — Figshare DOI link]**
+> **https://figshare.com/s/d6f8c97519f7730dfb40**
 
 | File | Size | Description |
 |---|---|---|
